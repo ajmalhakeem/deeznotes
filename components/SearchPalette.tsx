@@ -67,6 +67,15 @@ const fuseOptions = {
   keys: ["title", "content"],
   includeScore: true,
   includeMatches: true,
+  shouldSort: true,
+  tokenize: true,
+  matchAllTokens: true,
+  location: 0,
+  threshold: 0.3,
+  distance: 100,
+  maxPatternLength: 32,
+  minMatchCharLength: 2,
+  useExtendedSearch: true,
 };
 
 const fuse = new Fuse(notes, fuseOptions);
@@ -75,8 +84,38 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
+function getHighlightedText(text: string, matches: Fuse.FuseResultMatch[]) {
+  const indices = matches.flatMap((match) => match.indices);
+
+  if (indices.length === 0) {
+    return [text];
+  }
+
+  const segments: string[] = [];
+  let currentPosition = 0;
+
+  for (const [start, end] of indices) {
+    const unmatched = text.slice(currentPosition, start);
+
+    if (unmatched) {
+      segments.push(unmatched);
+    }
+
+    const matched = text.slice(start, end + 1);
+    segments.push(`[[${matched}]]`);
+
+    currentPosition = end + 1;
+  }
+
+  if (currentPosition < text.length) {
+    const unmatched = text.slice(currentPosition);
+    segments.push(unmatched);
+  }
+
+  return segments;
+}
+
 export default function SearchPalette() {
-  const [query, setQuery] = useState("");
   const [open, setOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<ResultNote[]>([]);
@@ -108,12 +147,11 @@ export default function SearchPalette() {
     };
   }, []);
 
-  console.log(searchResults);
   return (
     <Transition.Root
       show={open}
       as={Fragment}
-      afterLeave={() => setQuery("")}
+      afterLeave={() => setSearchResults([])}
       appear
     >
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -145,8 +183,8 @@ export default function SearchPalette() {
               >
                 <div className="relative">
                   <Combobox.Input
-                    className="block w-full appearance-none bg-transparent py-4 pl-4 pr-12 text-base text-slate-900 placeholder:text-slate-600 focus:outline-none sm:text-sm sm:leading-6"
-                    placeholder="Search..."
+                    className="font-mono block w-full appearance-none bg-transparent py-4 pl-4 pr-12 text-base text-slate-900 placeholder:text-slate-300 focus:outline-none sm:text-sm sm:leading-6"
+                    placeholder="travel, work, recipes, etc."
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
@@ -167,34 +205,75 @@ export default function SearchPalette() {
                           )
                         }
                       >
-                        {({ active }) => (
-                          <>
-                            <div className="ml-4 flex-auto">
-                              <p
-                                className={classNames(
-                                  "text-sm font-medium",
-                                  active ? "text-gray-900" : "text-gray-700"
-                                )}
-                              >
-                                {note.title}
-                              </p>
-                              <p
-                                className={classNames(
-                                  "text-sm",
-                                  active ? "text-gray-700" : "text-gray-500"
-                                )}
-                              >
-                                {note.content}
-                              </p>
-                            </div>
-                          </>
-                        )}
+                        {({ active }) => {
+                          const titleSegments = getHighlightedText(
+                            note.title,
+                            note.matches?.filter(
+                              (match) => match.key === "title"
+                            ) || []
+                          );
+                          const contentSegments = getHighlightedText(
+                            note.content,
+                            note.matches?.filter(
+                              (match) => match.key === "content"
+                            ) || []
+                          );
+
+                          return (
+                            <>
+                              <div className="ml-4 flex-auto font-mono">
+                                <p
+                                  className={classNames(
+                                    "text-sm font-medium",
+                                    active ? "text-gray-900" : "text-gray-700"
+                                  )}
+                                >
+                                  {titleSegments.map((segment, index) =>
+                                    segment.startsWith("[[") &&
+                                    segment.endsWith("]]") ? (
+                                      <span
+                                        key={index}
+                                        className="bg-yellow-200"
+                                      >
+                                        {segment.slice(2, -2)}
+                                      </span>
+                                    ) : (
+                                      segment
+                                    )
+                                  )}
+                                </p>
+                                <p
+                                  className={classNames(
+                                    "text-sm",
+                                    active ? "text-gray-700" : "text-gray-500"
+                                  )}
+                                >
+                                  {contentSegments.map((segment, index) =>
+                                    segment.startsWith("[[") &&
+                                    segment.endsWith("]]") ? (
+                                      <span
+                                        key={index}
+                                        className="bg-yellow-200"
+                                      >
+                                        {segment.slice(2, -2)}
+                                      </span>
+                                    ) : (
+                                      segment
+                                    )
+                                  )}
+                                </p>
+                              </div>
+                            </>
+                          );
+                        }}
                       </Combobox.Option>
                     ))}
                   </Combobox.Options>
                 )}
                 {searchResults.length === 0 && (
-                  <p className="p-4 text-sm text-gray-500">No notes found.</p>
+                  <p className="p-4 text-sm text-gray-500 font-mono">
+                    no notes found.
+                  </p>
                 )}
               </Combobox>
             </Dialog.Panel>
