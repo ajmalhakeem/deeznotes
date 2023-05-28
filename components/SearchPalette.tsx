@@ -61,6 +61,106 @@ const notes: Note[] = [
     content:
       "1. Read 1 book per month. 2. Learn a new language. 3. Travel to a new country.",
   },
+  {
+    title: "Famous Quotes",
+    content:
+      "1. 'The only way to do great work is to love what you do.' - Steve Jobs. 2. 'The mind is everything. What you think you become.' - Buddha. 3. 'In the middle of every difficulty lies opportunity.' - Albert Einstein.",
+  },
+  {
+    title: "Movie List",
+    content:
+      "Inception, The Dark Knight, The Godfather, Pulp Fiction, The Shawshank Redemption, Fight Club, The Matrix, Schindler's List.",
+  },
+  {
+    title: "Gardening To-do",
+    content:
+      "Water plants. Trim hedges. Mow lawn. Plant new rose bushes. Fertilize flower bed.",
+  },
+  {
+    title: "Learning Goals",
+    content:
+      "Complete online course in AI. Attend Python coding workshop. Read 5 books on data science. Get certified in machine learning.",
+  },
+  {
+    title: "Home Improvement",
+    content:
+      "Paint living room. Fix leaky faucet. Organize garage. Install new light fixtures in kitchen.",
+  },
+  {
+    title: "Favorite Recipes",
+    content:
+      "Butter Chicken, Tacos, Caesar Salad, Margherita Pizza, Chocolate Chip Cookies, Red Velvet Cake.",
+  },
+  {
+    title: "Children's Schedule",
+    content:
+      "Monday: Soccer practice, Tuesday: Music lessons, Wednesday: Tutoring, Thursday: Playdate, Friday: Swimming lessons.",
+  },
+  {
+    title: "Motivational Quotes",
+    content:
+      "1. 'The future belongs to those who believe in the beauty of their dreams.' - Eleanor Roosevelt. 2. 'The only limit to our realization of tomorrow will be our doubts of today.' - Franklin D. Roosevelt. 3. 'You are never too old to set another goal or to dream a new dream.' - C.S. Lewis.",
+  },
+  {
+    title: "Weekly Menu",
+    content:
+      "Monday: Salmon and veggies, Tuesday: Chicken stir-fry, Wednesday: Spaghetti Bolognese, Thursday: Vegan curry, Friday: Pizza night.",
+  },
+  {
+    title: "Business Ideas",
+    content:
+      "Online tutoring platform, Mobile pet grooming service, Virtual reality fitness app, Eco-friendly clothing line.",
+  },
+  {
+    title: "Photography Locations",
+    content:
+      "Golden Gate Bridge, Grand Canyon, Niagara Falls, Eiffel Tower, Pyramids of Giza, Santorini, Maldives, Great Barrier Reef.",
+  },
+  {
+    title: "Leadership Quotes",
+    content:
+      "1. 'The greatest leader is not necessarily the one who does the greatest things. He is the one that gets the people to do the greatest things.' - Ronald Reagan. 2. 'I can't change the direction of the wind, but I can adjust my sails to always reach my destination.' - Jimmy Dean.",
+  },
+  {
+    title: "Family Game Night",
+    content:
+      "Monopoly, Scrabble, Uno, Jenga, Pictionary, Codenames, Twister, Catan.",
+  },
+  {
+    title: "Learning Resources",
+    content:
+      "Coursera, Khan Academy, Codecademy, Udemy, OpenAI, edX, Project Euler, LeetCode.",
+  },
+  {
+    title: "Local Events",
+    content:
+      "Farmers market on Saturday, Book club on Tuesday, Jazz concert on Friday, Art exhibit opening next week.",
+  },
+  {
+    title: "Self-Care Routine",
+    content:
+      "Morning yoga, Healthy breakfast, 10-minute meditation, Evening skincare routine, Read before bed.",
+  },
+  {
+    title: "Inspiring Book Quotes",
+    content:
+      "1. 'It is our choices, Harry, that show what we truly are, far more than our abilities.' - J.K. Rowling, Harry Potter and the Chamber of Secrets. 2. 'I wish it need not have happened in my time,' said Frodo. 'So do I,' said Gandalf, 'and so do all who live to see such times. But that is not for them to decide. All we have to decide is what to do with the time that is given us.' - J.R.R. Tolkien, The Fellowship of the Ring.",
+  },
+  {
+    title: "Healthy Snack Ideas",
+    content:
+      "Hummus and vegetables, Greek yogurt and berries, Peanut butter and apple slices, Almonds, Protein shake, Boiled eggs.",
+  },
+  {
+    title: "Outdoor Activities",
+    content:
+      "Hiking, Biking, Swimming, Camping, Kayaking, Rock climbing, Bird watching, Picnicking.",
+  },
+  {
+    title: "DIY Projects",
+    content:
+      "Build a birdhouse, Create homemade soap, Knit a scarf, Paint a canvas, Plant an herb garden, Refurbish an old chair.",
+  },
 ];
 
 const fuseOptions = {
